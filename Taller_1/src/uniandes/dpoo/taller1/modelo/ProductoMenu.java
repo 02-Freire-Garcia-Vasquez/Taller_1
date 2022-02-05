@@ -39,4 +39,10 @@ public class ProductoMenu
 		return Factura;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return nombre + " (" + precioBase + ")";
+	}
+	
 }

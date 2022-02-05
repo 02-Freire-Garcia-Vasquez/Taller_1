@@ -14,8 +14,8 @@ public class Ingrediente
 	
 	public Ingrediente(String pnombre, int pCostoAdicional)
 	{
-		nombre = pnombre;
-		CostoAdicional = pCostoAdicional;
+		this.nombre = pnombre;
+		this.CostoAdicional = pCostoAdicional;
 		
 	// ************************************************************************
 	// Metodos

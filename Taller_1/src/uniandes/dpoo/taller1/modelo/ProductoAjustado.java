@@ -1,5 +1,7 @@
 package uniandes.dpoo.taller1.modelo;
 
+import java.util.List;
+
 public class ProductoAjustado 
 
 {
@@ -8,7 +10,7 @@ public class ProductoAjustado
 	// Atributos
 	// ************************************************************************
 	
-	private Ingrediente agregado;
+	private List<Ingrediente> agregados;
 	
 	private String nombre;
 	
@@ -17,8 +19,14 @@ public class ProductoAjustado
 	public ProductoAjustado(ProductoMenu base)
 	{
 
-		nombre = base.getNombre() + "con" + agregado.getNombre();
-		precio = base.getPrecio() + agregado.getCostoAdicional();
+		nombre = base.getNombre();
+		precio = base.getPrecio();
+		
+		for (int i = 0; i < agregados.size(); i++)
+		{	
+				nombre += agregados.get(i).getNombre();
+				precio += agregados.get(i).getCostoAdicional();
+		}
 		
 	// ************************************************************************
 	// Metodos

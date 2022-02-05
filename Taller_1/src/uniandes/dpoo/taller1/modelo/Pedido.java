@@ -1,5 +1,7 @@
 package uniandes.dpoo.taller1.modelo;
 
-public class Pedido {
+public class Pedido 
+
+{
 
 }
