@@ -2,7 +2,7 @@ package uniandes.dpoo.taller1.modelo;
 
 import java.util.List;
 
-public class ProductoAjustado 
+public class ProductoAjustado implements Producto 
 
 {
 	

@@ -1,6 +1,7 @@
 package uniandes.dpoo.taller1.consola;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -12,9 +13,16 @@ public class Aplicacion
 
 {
 	
+	
 	public void ejecutarAplicacion()
 	{
-		ejecutarCargarInformacion();
+		
+		try {
+			ejecutarCargarInformacion();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("Estadísticas sobre los Juegos Olímpicos\n");
 
 		boolean continuar = true;
@@ -25,15 +33,20 @@ public class Aplicacion
 				mostrarMenu();
 				int opcion_seleccionada = Integer.parseInt(input("Por favor seleccione una opción"));
 				if (opcion_seleccionada == 1)
-					ejecutarMostarMenu();
+					try {
+						ejecutarMostarMenu();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				else if (opcion_seleccionada == 2)
-					ejecutarMostarMenu();
+					System.out.println("hola");
 				else if (opcion_seleccionada == 3)
-					ejecutarMostarMenu();
+					System.out.println("hola");
 				else if (opcion_seleccionada == 4)
-					ejecutarMostarMenu();
+					System.out.println("hola");
 				else if (opcion_seleccionada == 5)
-					ejecutarMostarMenu();
+					System.out.println("hola");
 				else if (opcion_seleccionada == 6)
 				{
 					System.out.println("Saliendo de la aplicación ...");
@@ -63,23 +76,18 @@ public class Aplicacion
 
 	}
 	
-	private void ejecutarMostarMenu()
-	{
-		System.out.println("\n" + "El menu es el siguiente:" + "\n");
-		List<ProductoMenu> Menu = Restaurante.getMenuBase();
-		System.out.println(Menu);
-	}
-	
-	private void ejecutarCargarInformacion()
+	private void ejecutarCargarInformacion() throws FileNotFoundException, IOException
 	{
 		
 		System.out.println("\n" + "Cargar un archivo" + "\n");
-		try {
-			Restaurante.cargarInformacionRestaurante("./data/ingredientes.txt","./data/menu.txt","./data/combos.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Restaurante.cargarInformacionRestaurante();
+	}
+	
+	private void ejecutarMostarMenu() throws FileNotFoundException, IOException
+	{
+		System.out.println("\n" + "El menu es el siguiente:" + "\n");
+		List<ProductoMenu> menu = Restaurante.getMenuBase();
+		System.out.println(menu);
 	}
 	
 	public String input(String mensaje)

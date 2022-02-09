@@ -1,6 +1,6 @@
 package uniandes.dpoo.taller1.modelo;
 
-public class ProductoMenu 
+public class ProductoMenu implements Producto
 
 {
 	

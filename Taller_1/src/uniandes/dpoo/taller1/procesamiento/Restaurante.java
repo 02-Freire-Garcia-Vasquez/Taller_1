@@ -4,13 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import uniandes.dpoo.taller1.modelo.Ingrediente;
 import uniandes.dpoo.taller1.modelo.ProductoMenu;
-
 import uniandes.dpoo.taller1.modelo.Combo;
 
 public class Restaurante 
@@ -21,17 +19,17 @@ public class Restaurante
 	// Atributos
 	// ************************************************************************
 	
-	private List<Ingrediente> ingredientes;
+	private static List<Ingrediente> ingredientes;
 	
 	private static List<ProductoMenu> menuBase;
 	
-	private List<Combo> combos;
+	private static List<Combo> combos;
 	
 	// ************************************************************************
 		// Metodos
 		// ************************************************************************
 
-	public static List<ProductoMenu> getMenuBase()
+	public  static List<ProductoMenu> getMenuBase()
 	{
 		return menuBase;
 	}
@@ -41,16 +39,16 @@ public class Restaurante
 		return ingredientes;
 	}
 	
-	public static void cargarInformacionRestaurante(String nombreArchivoIngredientes,String nombreArchivoMenu,String nombreArchivoCombos) throws FileNotFoundException, IOException
+	public static void cargarInformacionRestaurante() throws FileNotFoundException, IOException
 	{
-		cargarIngredientes(nombreArchivoIngredientes);
-		cargarMenu(nombreArchivoMenu);
-		cargarCombos(nombreArchivoCombos);
+		ingredientes = cargarIngredientes("./data/ingredientes.txt");
+		menuBase = cargarMenu("./data/menu.txt");
+		combos = cargarCombos("./data/combos.txt");
 	}
 	
-	private static void cargarIngredientes(String nombreArchivo) throws FileNotFoundException, IOException
+	private static List<Ingrediente> cargarIngredientes(String nombreArchivo) throws FileNotFoundException, IOException
 	{
-		Map<String, Ingrediente> Mapaingredientes = new HashMap<>();
+		List<Ingrediente> listaIngredientes = new ArrayList<>();
 		
 		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
@@ -62,19 +60,21 @@ public class Restaurante
 			int precioadicional = Integer.parseInt(partes[1]);
 			
 			Ingrediente elIngrediente = new Ingrediente(nombreIngrediente,precioadicional);
-			Mapaingredientes.put(nombreIngrediente, elIngrediente);
+			listaIngredientes.add(elIngrediente);
 
 			linea = br.readLine(); // Leer la siguiente línea
 		}
 		
 		
 		br.close();
+		
+		return listaIngredientes;
 	}
 	
 	
-	private static void cargarMenu(String nombreArchivo) throws FileNotFoundException, IOException
+	private static List<ProductoMenu> cargarMenu(String nombreArchivo) throws FileNotFoundException, IOException
 	{
-		Map<String, ProductoMenu> MapaMenu = new HashMap<>();
+		List<ProductoMenu> listaMenu = new ArrayList<>();
 		
 		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
@@ -86,18 +86,20 @@ public class Restaurante
 			int costoBase = Integer.parseInt(partes[1]);
 			
 			ProductoMenu elMenu = new ProductoMenu(nombreMenu,costoBase);
-			MapaMenu.put(nombreMenu, elMenu);
+			listaMenu.add(elMenu);
 
 			linea = br.readLine(); // Leer la siguiente línea
 		}
 		
 		
 		br.close();
+		
+		return listaMenu;
 	}
 	
-	private static void cargarCombos(String nombreArchivo) throws FileNotFoundException, IOException
+	private static List<Combo> cargarCombos(String nombreArchivo) throws FileNotFoundException, IOException
 	{
-		Map<String, Combo> MapaCombos = new HashMap<>();
+		List<Combo> listaCombos = new ArrayList<>();
 		
 		BufferedReader br = new BufferedReader(new FileReader(nombreArchivo));
 		String linea = br.readLine();
@@ -109,13 +111,15 @@ public class Restaurante
 			int descuento = Integer.parseInt(partes[1].replace("%", ""));
 			
 			Combo elcombo = new Combo(nombreCombo,descuento);
-			MapaCombos.put(nombreCombo, elcombo);
+			listaCombos.add(elcombo);
 
 			linea = br.readLine(); // Leer la siguiente línea
 		}
 		
 		
 		br.close();
+		
+		return listaCombos;
 	}
 	
 }
