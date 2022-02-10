@@ -162,4 +162,24 @@ public class Restaurante
 		System.runFinalization();
 	}
 	
+	public static String ConsultarPedido(int idPedido) throws FileNotFoundException, IOException
+	{
+		
+		BufferedReader br = new BufferedReader(new FileReader("./data/" + String.valueOf(idPedido) + ".txt"));
+		String linea = br.readLine();
+		String Factura = "";
+		while (linea != null) // Cuando se llegue al final del archivo, linea tendrá el valor null
+		{
+			// Separar los valores que estaban en una línea
+			Factura += linea + "\n";
+			
+			linea = br.readLine(); // Leer la siguiente línea
+		}
+		
+		
+		br.close();
+		
+		return Factura;
+	}
+	
 }

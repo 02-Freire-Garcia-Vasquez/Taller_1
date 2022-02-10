@@ -11,9 +11,9 @@ public class ProductoAjustado implements Producto
 	// Atributos
 	// ************************************************************************
 	
-	private static List<Ingrediente> agregados;
+	private  List<Ingrediente> agregados;
 	
-	private static List<Ingrediente> eliminados;
+	private  List<Ingrediente> eliminados;
 	
 	private String nombre;
 	
@@ -40,14 +40,14 @@ public class ProductoAjustado implements Producto
 		String Factura = "";
 		for (Ingrediente pingrediente : agregados)
 		{	
-			añade += "con adicion de" + pingrediente.getNombre();
+			añade += " con adicion de " + pingrediente.getNombre();
 		}
 		
-		for (Ingrediente pingrediente : eliminados)
+		for (Ingrediente qingrediente : eliminados)
 		{	
-			elimina += "sin" + pingrediente.getNombre();
+			elimina += " sin " + qingrediente.getNombre();
 		}
-		Factura = nombre + añade + elimina;
+		Factura = nombre + añade + elimina + " " + String.valueOf(precio);
 		return Factura;
 	}
 	
@@ -55,34 +55,29 @@ public class ProductoAjustado implements Producto
 	{
 		for (Ingrediente pingrediente : agregados)
 		{	
-				nombre += "con adicion de" + pingrediente.getNombre();
+				nombre += " con adicion de " + pingrediente.getNombre();
 		}
 		
-		for (Ingrediente pingrediente : eliminados)
+		for (Ingrediente qingrediente : eliminados)
 		{	
-				nombre += "sin" + pingrediente.getNombre();
+				nombre += " sin " + qingrediente.getNombre();
 		}
 		return nombre;
 	}
 	
 	public int getPrecio()
 	{
-		
-		
-		for (Ingrediente pingrediente : agregados)
-		{	
-				precio += pingrediente.getCostoAdicional();
-		}
 		return precio;
 	}
 	
 	public  void agregarIngrediente(Ingrediente nuevoIngrediente)
 	{
 		agregados.add(nuevoIngrediente);
+		precio += nuevoIngrediente.getCostoAdicional();
 	}
 	
-	public  void quitarIngrediente(Ingrediente nuevoIngrediente)
+	public  void quitarIngrediente(Ingrediente ingredientequitrar)
 	{
-		eliminados.add(nuevoIngrediente);
+		eliminados.add(ingredientequitrar);
 	}
 }

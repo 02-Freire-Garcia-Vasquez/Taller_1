@@ -117,7 +117,7 @@ public class Pedido
 		File file = new File("./data/" + String.valueOf(idPedido) + ".txt"); 
 		if(file.createNewFile()) System.out.println("File created: " + file.getName()); 
 		else System.out.println("File already exists."); 
-		BufferedWriter writer = new BufferedWriter(new FileWriter("./data/factura.txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("./data/" + String.valueOf(idPedido) + ".txt"));
 		
 		writer.write(Factura);
 		writer.close();

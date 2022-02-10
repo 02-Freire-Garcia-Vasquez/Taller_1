@@ -66,7 +66,12 @@ public class Aplicacion
 						e.printStackTrace();
 					}
 				else if (opcion_seleccionada == 5)
-					System.out.println("hola");
+					try {
+						ejecutarConsultarPedido();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				else if (opcion_seleccionada == 6)
 				{
 					System.out.println("Saliendo de la aplicación ...");
@@ -175,7 +180,7 @@ public class Aplicacion
 		 Producto comboSeleccionado = combos.get(opcionCombo);
 		 pedidoEnCurso.agregarProducto(comboSeleccionado);
 		}
-		if (opcionTipo == 1)
+		else if (opcionTipo == 1)
 		{
 		 int opcionMenu = Integer.parseInt(input("Porfavor seleccione una opcion de menu"));
 		 int opcionAgregar = Integer.parseInt(input("Deseas agregar o quitar algo de este producto del menu, marca 0 (Si) o marca 1 (No)"));
@@ -193,18 +198,18 @@ public class Aplicacion
 			 boolean continuar = true;
 					 while (continuar)
 					 {
-						 int opcionquitaragregar = Integer.parseInt(input("Deseas agregar o quitar un ingrediente, marca 0 (agregar), marca 1 () quitar"));
+						 int opcionquitaragregar = Integer.parseInt(input("Deseas agregar o quitar un ingrediente, marca 0 (agregar), marca 1 (quitar)"));
 						 int opcionIngrediente = Integer.parseInt(input("Porfavor seleccione una opcion de los ingredientes"));
 						 Ingrediente ingredienteAgregadoQuitado = ingredientes.get(opcionIngrediente);
 						 if (opcionquitaragregar == 0)
 						 {
 							 productoAgregoQuito.agregarIngrediente(ingredienteAgregadoQuitado);
 						 }
-						 else if (opcionAgregar == 1)
+						 else if (opcionquitaragregar == 1)
 						 {
 							 productoAgregoQuito.quitarIngrediente(ingredienteAgregadoQuitado);
 						 }
-						 int opcionfianlizar = Integer.parseInt(input("Deseas agregar o quitar mas productos, marca 0 (Si), marca 1 (No)"));
+						 int opcionfianlizar = Integer.parseInt(input("Deseas agregar o quitar mas ingredientes al producto, marca 0 (Si), marca 1 (No)"));
 						 if (opcionfianlizar == 1)
 						 {
 							 continuar = false;
@@ -227,6 +232,14 @@ public class Aplicacion
 		String Factura = pedidoEnCurso.generarTextoFactura();
 		System.out.println(Factura);
 		System.out.println("\n" + "Pedido guardado y factura generada" + "\n");
+	}
+	
+	private void ejecutarConsultarPedido() throws FileNotFoundException, IOException
+	{
+		int idPedido = Integer.parseInt(input("Porfavor escriba el Id del pedido que quiere buscar"));
+		String infoPedido = Restaurante.ConsultarPedido(idPedido);
+		System.out.println("\n" + "La factura del pedido es la siguiente" + "\n");
+		System.out.println(infoPedido);
 	}
 	
 	public String input(String mensaje)
