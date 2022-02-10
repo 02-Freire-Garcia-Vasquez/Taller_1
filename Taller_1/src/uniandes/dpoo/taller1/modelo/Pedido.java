@@ -5,11 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import uniandes.dpoo.taller1.consola.Aplicacion;
 
 public class Pedido 
 
@@ -40,6 +36,7 @@ public class Pedido
 		DireccionCliente = pdireccionCliente;
 		itemsPedido = new ArrayList<>();
 		idPedido = (int)(Math. random()*100+1); 
+		numeroPedidos += 1;
 	}
 	
 	public int getIdPedido()
@@ -66,14 +63,9 @@ public class Pedido
 	
 	public int getPrecioIvaPedido()
 	{
-		int PrecioNeto = 0;
-		for (Producto item : itemsPedido)
-		{
-			int precio = item.getPrecio();
-			PrecioNeto += precio;
-		}
-
-		int PrecioIva = PrecioNeto*(19/100);
+		
+		int PrecioNeto = getPrecioNetoPedido();
+		int PrecioIva = (int)(PrecioNeto*(0.19));
 		
 		return PrecioIva;
 	}
@@ -81,14 +73,8 @@ public class Pedido
 	public int getPrecioTotalPedido()
 	{
 		int PrecioTotal = 0;
-		int PrecioNeto = 0;
-		for (Producto item : itemsPedido)
-		{
-			int precio = item.getPrecio();
-			PrecioNeto += precio;
-		}
-
-		int PrecioIva = PrecioNeto*(19/100);
+		int PrecioNeto = getPrecioNetoPedido();
+		int PrecioIva = getPrecioIvaPedido();
 		PrecioTotal = PrecioNeto+PrecioIva;
 		
 		return PrecioTotal;
@@ -96,28 +82,45 @@ public class Pedido
 	
 	public String generarTextoFactura()
 	{
-		String Factura = "hola esto todavia es una prueba";
+		String Factura = "Factura: ";
+		
+		Factura += String.valueOf(idPedido) + "\n";
+		
+		Factura += "Nombre: " + NombreCliente + ": " + "\n";
+		
+		Factura += "Direccion: " + DireccionCliente + ": " + "\n";
+		
+		Factura += "Numero de pedido: " + String.valueOf(numeroPedidos) + ": " + "\n";
+		
+		for (Producto item : itemsPedido)
+		{
+			Factura += item.generarTextoFactura() + "\n";
+		}
+		
+		int PrecioNeto = getPrecioNetoPedido();
+		Factura += "Precio Neto: " + String.valueOf(PrecioNeto) + "\n";
+		
+		int  PrecioIVA = getPrecioIvaPedido();
+		Factura += "Precio IVA: " + String.valueOf(PrecioIVA) + "\n";
+		
+		int PrecioTotal = getPrecioTotalPedido();
+		Factura += "Precio Total: " + String.valueOf(PrecioTotal) + "\n";
+		
 		return Factura;
 	}
 	
-	public static void guardarFactura() throws IOException
+	public  void guardarFactura() throws IOException
 	{
 		
-		String message = "hola como estan quisiera decirle qeu vamos bien";
+		String Factura = generarTextoFactura();
 
-		File file = new File("./data/factura.txt"); 
+		File file = new File("./data/" + String.valueOf(idPedido) + ".txt"); 
 		if(file.createNewFile()) System.out.println("File created: " + file.getName()); 
 		else System.out.println("File already exists."); 
 		BufferedWriter writer = new BufferedWriter(new FileWriter("./data/factura.txt"));
-		writer.write(message); 
+		
+		writer.write(Factura);
 		writer.close();
 	}
-	
-	public static void main(String[] args) throws IOException
-	{
-		guardarFactura();
-	}
-	
-	
 	
 }

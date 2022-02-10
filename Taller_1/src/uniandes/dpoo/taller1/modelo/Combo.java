@@ -1,8 +1,9 @@
 package uniandes.dpoo.taller1.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Combo 
+public class Combo implements Producto
 
 {
 	
@@ -24,6 +25,7 @@ public class Combo
 		
 		nombreCombo = pnombre;
 		descuento = pdescuento;
+		itemsCombo = new ArrayList<>();
 
 	}
 	
@@ -41,6 +43,8 @@ public class Combo
 	
 	public int getPrecio()
 	{
+		precio = 0;
+				
 		for (ProductoMenu pitemCombo : itemsCombo)
 		{
 			precio += (int)(pitemCombo.getPrecio()*((100-descuento)/100));
@@ -51,8 +55,13 @@ public class Combo
 	
 	public String generarTextoFactura()
 	{
-		String Factura = "hola esto todavia es una prueba";
+		String Factura = nombreCombo + " " +String.valueOf(precio);
 		return Factura;
+	}
+	
+	public String toString()
+	{
+		return nombreCombo + " (" + precio + ")";
 	}
 
 

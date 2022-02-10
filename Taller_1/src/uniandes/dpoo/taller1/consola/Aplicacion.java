@@ -6,6 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import uniandes.dpoo.taller1.modelo.Combo;
+import uniandes.dpoo.taller1.modelo.Ingrediente;
+import uniandes.dpoo.taller1.modelo.Pedido;
+import uniandes.dpoo.taller1.modelo.Producto;
+import uniandes.dpoo.taller1.modelo.ProductoAjustado;
 import uniandes.dpoo.taller1.modelo.ProductoMenu;
 import uniandes.dpoo.taller1.procesamiento.Restaurante;
 
@@ -40,11 +45,26 @@ public class Aplicacion
 						e.printStackTrace();
 					}
 				else if (opcion_seleccionada == 2)
-					System.out.println("hola");
+					try {
+						ejecutarInicarPedido();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				else if (opcion_seleccionada == 3)
-					System.out.println("hola");
+					try {
+						ejecutaragregarProducto();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				else if (opcion_seleccionada == 4)
-					System.out.println("hola");
+					try {
+						ejecutarcerrarYGuardar();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				else if (opcion_seleccionada == 5)
 					System.out.println("hola");
 				else if (opcion_seleccionada == 6)
@@ -80,14 +100,133 @@ public class Aplicacion
 	{
 		
 		System.out.println("\n" + "Cargar un archivo" + "\n");
-		Restaurante.cargarInformacionRestaurante();
+		String archivoIngredientes = "./data/ingredientes.txt";
+		String archivoMenu = "./data/menu.txt";
+		String archivoCombos = "./data/combos.txt";
+		Restaurante.cargarInformacionRestaurante(archivoIngredientes,archivoMenu,archivoCombos);
 	}
 	
 	private void ejecutarMostarMenu() throws FileNotFoundException, IOException
 	{
 		System.out.println("\n" + "El menu es el siguiente:" + "\n");
 		List<ProductoMenu> menu = Restaurante.getMenuBase();
-		System.out.println(menu);
+		
+		int opciones = 0;
+		
+		for (ProductoMenu productoMenu : menu)
+		{
+			String textoMenu = String.valueOf(opciones) + " " + productoMenu.generarTextoFactura() + "\n";
+			System.out.println(textoMenu);
+			opciones += 1;
+		}
+	}
+	
+	private void ejecutarMostarCombos() throws FileNotFoundException, IOException
+	{
+		System.out.println("\n" + "El menu es el siguiente:" + "\n");
+		List<Combo> combos = Restaurante.getCombos();
+		
+		int opciones = 0;
+		
+		for (Combo combo : combos)
+		{
+			String textoCombo = String.valueOf(opciones) + " " + combo.generarTextoFactura() + "\n";
+			System.out.println(textoCombo);
+			opciones += 1;
+		}
+	}
+	
+	private void ejecutarMostarIngredientes() throws FileNotFoundException, IOException
+	{
+		System.out.println("\n" + "El menu es el siguiente:" + "\n");
+		List<Ingrediente> ingredientes = Restaurante.getIngredientes();
+		
+		int opciones = 0;
+		
+		for (Ingrediente ingrediente : ingredientes)
+		{
+			String textoIngrediente = String.valueOf(opciones) + " " + ingrediente.getNombre() + String.valueOf(ingrediente.getCostoAdicional()) + "\n";
+			System.out.println(textoIngrediente);
+			opciones += 1;
+		}
+	}
+	
+	private void ejecutarInicarPedido() throws FileNotFoundException, IOException
+	{
+		System.out.println("\n" + "El pedido esta inciando:" + "\n");
+		String nombreCliente = input("Por favor ingrese su nombre");
+		String direccionCliente = input("Por favor ingrese su direccion");
+		Restaurante.IniciarPedido(nombreCliente,direccionCliente);
+		System.out.println("\n" + "Pedido en curso" + "\n");
+	}
+	
+	private void ejecutaragregarProducto() throws FileNotFoundException, IOException
+	{
+		System.out.println("\n" + "Ahora vas a armar el pedido:" + "\n");
+		Pedido pedidoEnCurso= Restaurante.getPedidoEnCurso();
+		System.out.println("\n" + "Aqui tienes nuestros combos por si te intersan:" + "\n");
+		List<Combo> combos = Restaurante.getCombos();
+		List<ProductoMenu> menu = Restaurante.getMenuBase();
+		ejecutarMostarCombos();
+		int opcionTipo = Integer.parseInt(input("Te intersa un combo o un producto del menu, marca 0 o 1 respectivamente"));
+		if (opcionTipo == 0)
+		{
+		 int opcionCombo = Integer.parseInt(input("Porfavor seleccione una opcion de combo"));
+		 Producto comboSeleccionado = combos.get(opcionCombo);
+		 pedidoEnCurso.agregarProducto(comboSeleccionado);
+		}
+		if (opcionTipo == 1)
+		{
+		 int opcionMenu = Integer.parseInt(input("Porfavor seleccione una opcion de menu"));
+		 int opcionAgregar = Integer.parseInt(input("Deseas agregar o quitar algo de este producto del menu, marca 0 (Si) o marca 1 (No)"));
+		 if (opcionAgregar == 1)
+			{
+			 Producto menuSeleccionado = menu.get(opcionMenu);
+			 pedidoEnCurso.agregarProducto(menuSeleccionado);
+			}
+		 else if (opcionAgregar == 0)
+		 	{
+			 ProductoMenu menuSeleccionado = menu.get(opcionMenu);
+			 ProductoAjustado productoAgregoQuito = new ProductoAjustado(menuSeleccionado);
+			 ejecutarMostarIngredientes();
+			 List<Ingrediente> ingredientes = Restaurante.getIngredientes();
+			 boolean continuar = true;
+					 while (continuar)
+					 {
+						 int opcionquitaragregar = Integer.parseInt(input("Deseas agregar o quitar un ingrediente, marca 0 (agregar), marca 1 () quitar"));
+						 int opcionIngrediente = Integer.parseInt(input("Porfavor seleccione una opcion de los ingredientes"));
+						 Ingrediente ingredienteAgregadoQuitado = ingredientes.get(opcionIngrediente);
+						 if (opcionquitaragregar == 0)
+						 {
+							 productoAgregoQuito.agregarIngrediente(ingredienteAgregadoQuitado);
+						 }
+						 else if (opcionAgregar == 1)
+						 {
+							 productoAgregoQuito.quitarIngrediente(ingredienteAgregadoQuitado);
+						 }
+						 int opcionfianlizar = Integer.parseInt(input("Deseas agregar o quitar mas productos, marca 0 (Si), marca 1 (No)"));
+						 if (opcionfianlizar == 1)
+						 {
+							 continuar = false;
+						
+						 }
+
+					 }
+					 
+			pedidoEnCurso.agregarProducto(productoAgregoQuito);
+		 	}
+		}
+	}
+	
+	private void ejecutarcerrarYGuardar() throws FileNotFoundException, IOException
+	{
+		
+		Restaurante.cerrarYGuardarPedido();
+		System.out.println("\n" + "La factura quedo de la siguiente manera" + "\n");
+		Pedido pedidoEnCurso= Restaurante.getPedidoEnCurso();
+		String Factura = pedidoEnCurso.generarTextoFactura();
+		System.out.println(Factura);
+		System.out.println("\n" + "Pedido guardado y factura generada" + "\n");
 	}
 	
 	public String input(String mensaje)

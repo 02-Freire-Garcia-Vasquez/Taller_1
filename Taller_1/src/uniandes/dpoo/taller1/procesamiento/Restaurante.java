@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uniandes.dpoo.taller1.modelo.Ingrediente;
+import uniandes.dpoo.taller1.modelo.Pedido;
 import uniandes.dpoo.taller1.modelo.ProductoMenu;
 import uniandes.dpoo.taller1.modelo.Combo;
 
@@ -25,6 +26,9 @@ public class Restaurante
 	
 	private static List<Combo> combos;
 	
+	private static  List<Pedido> pedidos;
+	
+	private static Pedido pedidoEnCurso;
 	// ************************************************************************
 		// Metodos
 		// ************************************************************************
@@ -34,16 +38,21 @@ public class Restaurante
 		return menuBase;
 	}
 	
-	public List<Ingrediente> getIngredientes()
+	public static List<Ingrediente> getIngredientes()
 	{
 		return ingredientes;
 	}
 	
-	public static void cargarInformacionRestaurante() throws FileNotFoundException, IOException
+	public static List<Combo> getCombos()
 	{
-		ingredientes = cargarIngredientes("./data/ingredientes.txt");
-		menuBase = cargarMenu("./data/menu.txt");
-		combos = cargarCombos("./data/combos.txt");
+		return combos;
+	}
+	
+	public static void cargarInformacionRestaurante(String archivo1,String archivo2,String archivo3) throws FileNotFoundException, IOException
+	{
+		ingredientes = cargarIngredientes(archivo1);
+		menuBase = cargarMenu(archivo2);
+		combos = cargarCombos(archivo3);
 	}
 	
 	private static List<Ingrediente> cargarIngredientes(String nombreArchivo) throws FileNotFoundException, IOException
@@ -111,8 +120,22 @@ public class Restaurante
 			int descuento = Integer.parseInt(partes[1].replace("%", ""));
 			
 			Combo elcombo = new Combo(nombreCombo,descuento);
+			
+			String producto1Menu = partes[2];
+			String producto2Menu = partes[3];
+			String producto3Menu = partes[4];
+			
+			List<ProductoMenu> menu = Restaurante.getMenuBase();
+			
+			for (ProductoMenu productoMenu : menu)
+			{
+				if (productoMenu.getNombre().equals(producto1Menu) |productoMenu.getNombre().equals(producto2Menu) |productoMenu.getNombre().equals(producto3Menu))
+				{
+					elcombo.agregarItemACombo(productoMenu);
+				}
+			}
+			
 			listaCombos.add(elcombo);
-
 			linea = br.readLine(); // Leer la siguiente línea
 		}
 		
@@ -120,6 +143,23 @@ public class Restaurante
 		br.close();
 		
 		return listaCombos;
+	}
+	
+	public static void IniciarPedido(String nombreCliente,String direccionCliente)
+	{
+		Pedido pedidoOrden = new Pedido(nombreCliente,direccionCliente);
+		pedidoEnCurso = pedidoOrden;
+	}
+	
+	public static Pedido getPedidoEnCurso()
+	{
+		return pedidoEnCurso;
+	}
+	
+	public static void cerrarYGuardarPedido() throws IOException
+	{
+		pedidoEnCurso.guardarFactura();
+		System.runFinalization();
 	}
 	
 }
