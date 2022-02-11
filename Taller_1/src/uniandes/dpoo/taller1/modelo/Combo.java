@@ -49,7 +49,7 @@ public class Combo implements Producto
 	
 	public String generarTextoFactura()
 	{
-		String Factura = nombreCombo + " " +String.valueOf(precio);
+		String Factura = nombreCombo + " $ " +String.valueOf(precio);
 		return Factura;
 	}
 	

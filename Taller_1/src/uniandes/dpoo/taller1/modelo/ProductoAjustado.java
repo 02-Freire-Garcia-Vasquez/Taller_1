@@ -47,7 +47,7 @@ public class ProductoAjustado implements Producto
 		{	
 			elimina += " sin " + qingrediente.getNombre();
 		}
-		Factura = nombre + añade + elimina + " " + String.valueOf(precio);
+		Factura = nombre + añade + elimina + " $ " + String.valueOf(precio);
 		return Factura;
 	}
 	

@@ -35,7 +35,7 @@ public class ProductoMenu implements Producto
 	
 	public String generarTextoFactura()
 	{
-		String Factura = nombre + " " + String.valueOf(precioBase);
+		String Factura = nombre + " $ " + String.valueOf(precioBase);
 		return Factura;
 	}
 	
