@@ -1,4 +1,4 @@
-package uniandes.dpoo.taller1.modelo;
+package uniandes.dpoo.taller1.modeloModificacion;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -122,5 +122,30 @@ public class Pedido
 		writer.write(Factura);
 		writer.close();
 	}
+	
+	public List<Producto> getitemsPedido()
+	{	
+		return itemsPedido;
+	}
+	
+	
+	@Override
+	public int hashCode() 
+	{
+		
+	return itemsPedido.hashCode();
+	
+	}
+	 
+	@Override
+	public boolean equals(Object obj) 
+	{
+		
+	Pedido p= (Pedido)obj;
+	 
+	return p.getitemsPedido().equals(this.getitemsPedido());
+	 
+	}
+	 
 	
 }

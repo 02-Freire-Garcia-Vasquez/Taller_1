@@ -1,4 +1,4 @@
-package uniandes.dpoo.taller1.modelo;
+package uniandes.dpoo.taller1.modeloModificacion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,8 @@ public class ProductoAjustado implements Producto
 	private String nombre;
 	
 	private int precio;
+	
+	private int calorias;
 
 	public ProductoAjustado(ProductoMenu base)
 	{
@@ -26,6 +28,7 @@ public class ProductoAjustado implements Producto
 		precio = base.getPrecio();
 		agregados = new ArrayList<>();
 		eliminados = new ArrayList<>();
+		calorias = base.getCalorias();
 		
 	// ************************************************************************
 	// Metodos
@@ -47,7 +50,7 @@ public class ProductoAjustado implements Producto
 		{	
 			elimina += " sin " + qingrediente.getNombre();
 		}
-		Factura = nombre + añade + elimina + " " + String.valueOf(precio);
+		Factura = nombre + añade + elimina + " " + String.valueOf(precio) + " " +  String.valueOf(calorias);
 		return Factura;
 	}
 	
@@ -71,24 +74,32 @@ public class ProductoAjustado implements Producto
 	}
 	
 	public  void agregarIngrediente(Ingrediente nuevoIngrediente)
+	
+	/**
+	 * Esta función permite agregar ingredientes, previamente previstos, 
+	 * a la lista de agregados que trae por defecto la clase de producto 
+	 * ajustado
+	 */
+	
 	{
-		/**
-		 * Esta función permite agregar ingredientes, previamente previstos, 
-		 * a la lista de agregados que trae por defecto la clase de producto 
-		 * ajustado
-		 */
-		
 		agregados.add(nuevoIngrediente);
 		precio += nuevoIngrediente.getCostoAdicional();
+		calorias += nuevoIngrediente.getCalorias();
 	}
 	
 	public  void quitarIngrediente(Ingrediente ingredientequitrar)
-	
+
 	/**
 	 * Esta función lo que hace es “quitar” ingredientes del producto. 
 	 * En realidad solo se hace esto de manera teórica. 
 	 */
 	{
 		eliminados.add(ingredientequitrar);
+	}
+
+	@Override
+	public int getCalorias() 
+	{
+		return calorias;
 	}
 }
