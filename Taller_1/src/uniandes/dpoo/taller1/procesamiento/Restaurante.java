@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import uniandes.dpoo.taller1.modelo.Ingrediente;
 import uniandes.dpoo.taller1.modelo.Pedido;
@@ -26,7 +28,7 @@ public class Restaurante
 	
 	private static List<Combo> combos;
 	
-	private static  List<Pedido> pedidos;
+	private static  Map<String,Pedido> pedidos;
 	
 	private static Pedido pedidoEnCurso;
 	// ************************************************************************
@@ -53,6 +55,7 @@ public class Restaurante
 		ingredientes = cargarIngredientes(archivo1);
 		menuBase = cargarMenu(archivo2);
 		combos = cargarCombos(archivo3);
+		pedidos = new HashMap<String, Pedido>();
 	}
 	
 	private static List<Ingrediente> cargarIngredientes(String nombreArchivo) throws FileNotFoundException, IOException
@@ -159,7 +162,8 @@ public class Restaurante
 	public static void cerrarYGuardarPedido() throws IOException
 	{
 		pedidoEnCurso.guardarFactura();
-		System.runFinalization();
+		pedidos.put(String.valueOf(pedidoEnCurso.getIdPedido()),pedidoEnCurso);
+		pedidoEnCurso = null;
 	}
 	
 	public static String ConsultarPedido(int idPedido) throws FileNotFoundException, IOException
@@ -175,6 +179,12 @@ public class Restaurante
 			
 			linea = br.readLine(); // Leer la siguiente línea
 		}
+		
+		System.out.println("La informacion del pedido es: ");
+		
+		Pedido pedidoSolcitado = pedidos.get(String.valueOf(idPedido));
+		String textoPedido = pedidoSolcitado.generarTextoFactura();
+		System.out.println(textoPedido);
 		
 		
 		br.close();

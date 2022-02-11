@@ -167,6 +167,8 @@ public class Aplicacion
 	
 	private void ejecutaragregarProducto() throws FileNotFoundException, IOException
 	{
+		if(Restaurante.getPedidoEnCurso()!=(null)) 
+		{
 		System.out.println("\n" + "Ahora vas a armar el pedido:" + "\n");
 		Pedido pedidoEnCurso= Restaurante.getPedidoEnCurso();
 		System.out.println("\n" + "Aqui tienes nuestros combos por si te intersan:" + "\n");
@@ -221,17 +223,24 @@ public class Aplicacion
 			pedidoEnCurso.agregarProducto(productoAgregoQuito);
 		 	}
 		}
+	
+		}
+		
+		if(Restaurante.getPedidoEnCurso()==(null)) 
+		{
+			System.out.println("\n" + "Porfavor debe inicar un pedido nuevo antes de elegir los productos" + "\n");
+		}
 	}
 	
 	private void ejecutarcerrarYGuardar() throws FileNotFoundException, IOException
 	{
 		
-		Restaurante.cerrarYGuardarPedido();
 		System.out.println("\n" + "La factura quedo de la siguiente manera" + "\n");
 		Pedido pedidoEnCurso= Restaurante.getPedidoEnCurso();
 		String Factura = pedidoEnCurso.generarTextoFactura();
 		System.out.println(Factura);
 		System.out.println("\n" + "Pedido guardado y factura generada" + "\n");
+		Restaurante.cerrarYGuardarPedido();
 	}
 	
 	private void ejecutarConsultarPedido() throws FileNotFoundException, IOException

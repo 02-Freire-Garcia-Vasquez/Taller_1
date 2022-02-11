@@ -11,7 +11,6 @@ import java.util.Map;
 
 import uniandes.dpoo.taller1.modeloModificacion.Ingrediente;
 import uniandes.dpoo.taller1.modeloModificacion.Pedido;
-import uniandes.dpoo.taller1.modeloModificacion.Producto;
 import uniandes.dpoo.taller1.modeloModificacion.ProductoMenu;
 import uniandes.dpoo.taller1.modeloModificacion.Bebida;
 import uniandes.dpoo.taller1.modeloModificacion.ComboModificacion;
@@ -184,7 +183,7 @@ public class RestauranteModificacion
 	{
 		pedidoEnCurso.guardarFactura();
 		pedidos.put(String.valueOf(pedidoEnCurso.getIdPedido()),pedidoEnCurso);
-		System.runFinalization();
+		pedidoEnCurso = null;
 	}
 	
 	public static String ConsultarPedido(int idPedido) throws FileNotFoundException, IOException
@@ -243,21 +242,11 @@ public class RestauranteModificacion
 	{
 		for (Map.Entry<String, Pedido> pedido : pedidos.entrySet()) 
 		{
-			for (Producto itempedido : pedido.getValue().getitemsPedido()) 
+		boolean yaExiste = pedidoEnCurso.equals(pedido.getValue());
+		if (yaExiste == true)
 			{
-				for (Producto itemspedidoEnCurso : pedidoEnCurso.getitemsPedido()) 
-				{
-					if ((itemspedidoEnCurso.getNombre().equals(itempedido.getNombre())))
-					 {
-						System.out.println("Este pedido ya fue realizado por alguien mas en este restaurante");
-					 }
-				}
+			System.out.println("------------------Este pedido ya fue realizado por alguien mas en este restaurante------------------");
 			}
-			boolean yaExiste = pedidoEnCurso.equals(pedido.getValue());
-			if (yaExiste == true)
-			 {
-				System.out.println("Este pedido ya fue realizado por alguien mas en este restaurante");
-			 }
 		}
 	}
 	
