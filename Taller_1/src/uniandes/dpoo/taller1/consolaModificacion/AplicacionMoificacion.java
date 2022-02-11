@@ -107,7 +107,7 @@ public class AplicacionMoificacion
 	{
 		
 		System.out.println("\n" + "Cargar un archivo" + "\n");
-		String archivoIngredientes = "./data/ingredientes.txt";
+		String archivoIngredientes = "./data/ingredientesModifiacion.txt";
 		String archivoMenu = "./data/menuModificacion.txt";
 		String archivoCombos = "./data/combos.txt";
 		String archivoBebidas = "./data/Bebidas.txt";

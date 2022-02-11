@@ -14,11 +14,11 @@ public class Bebida implements Producto
 	
 	private int calorias;
 
-	public Bebida(String pnombre, int pprecioBase)
+	public Bebida(String pnombre, int pprecioBase,int pcalorias)
 	{
 		nombre = pnombre;
 		precioBase = pprecioBase;
-		calorias = 5;
+		calorias = pcalorias;
 	}
 	
 	public String getNombre() 
@@ -33,7 +33,7 @@ public class Bebida implements Producto
 
 	public String generarTextoFactura() 
 	{
-		String Factura = nombre + " " + String.valueOf(precioBase) + " " + String.valueOf(calorias);
+		String Factura = nombre + " $ " + String.valueOf(precioBase) + " cal: " + String.valueOf(calorias);
 		return Factura;
 	}
 

@@ -52,7 +52,7 @@ public class ComboModificacion implements Producto
 	
 	public String generarTextoFactura()
 	{
-		String Factura = nombreCombo + " " +String.valueOf(precio);
+		String Factura = nombreCombo + " $ " +String.valueOf(precio)+ " cal: " +String.valueOf(calorias);
 		return Factura;
 	}
 	

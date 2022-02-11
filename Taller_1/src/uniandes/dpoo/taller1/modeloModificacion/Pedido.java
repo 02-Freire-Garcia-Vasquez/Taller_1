@@ -61,6 +61,18 @@ public class Pedido
 		return PrecioNeto;
 	}
 	
+	private int getCaloriasTotal()
+	{
+		int totalCalorias = 0;
+		for (Producto item : itemsPedido)
+		{
+			int caloriasindividual = item.getCalorias();
+			totalCalorias += caloriasindividual;
+		}
+		
+		return totalCalorias;
+	}
+	
 	private int getPrecioIvaPedido()
 	{
 		
@@ -105,6 +117,9 @@ public class Pedido
 		
 		int PrecioTotal = getPrecioTotalPedido();
 		Factura += "Precio Total: " + String.valueOf(PrecioTotal) + "\n";
+		
+		int CaloriasTotal = getCaloriasTotal();
+		Factura += "Calorias Total: " + String.valueOf(CaloriasTotal) + "\n";
 		
 		return Factura;
 	}

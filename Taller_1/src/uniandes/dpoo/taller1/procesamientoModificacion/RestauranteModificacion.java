@@ -80,8 +80,9 @@ public class RestauranteModificacion
 			String[] partes = linea.split(";");
 			String nombreIngrediente = partes[0];
 			int precioadicional = Integer.parseInt(partes[1]);
+			int pcaloriasIngredientes = Integer.parseInt(partes[2]);
 			
-			Ingrediente elIngrediente = new Ingrediente(nombreIngrediente,precioadicional);
+			Ingrediente elIngrediente = new Ingrediente(nombreIngrediente,precioadicional,pcaloriasIngredientes);
 			listaIngredientes.add(elIngrediente);
 
 			linea = br.readLine(); // Leer la siguiente línea
@@ -106,8 +107,9 @@ public class RestauranteModificacion
 			String[] partes = linea.split(";");
 			String nombreMenu = partes[0];
 			int costoBase = Integer.parseInt(partes[1]);
+			int pcaloriasMenuProducto = Integer.parseInt(partes[2]);
 			
-			ProductoMenu elMenu = new ProductoMenu(nombreMenu,costoBase);
+			ProductoMenu elMenu = new ProductoMenu(nombreMenu,costoBase,pcaloriasMenuProducto);
 			listaMenu.add(elMenu);
 
 			linea = br.readLine(); // Leer la siguiente línea
@@ -223,8 +225,9 @@ public class RestauranteModificacion
 			String[] partes = linea.split(";");
 			String nombreBebida = partes[0];
 			int precioBebida = Integer.parseInt(partes[1].replace("%", ""));
+			int pcaloriasBebida = Integer.parseInt(partes[2]);
 			
-			Bebida bebida = new Bebida(nombreBebida,precioBebida);
+			Bebida bebida = new Bebida(nombreBebida,precioBebida,pcaloriasBebida);
 			
 			listabebidas.add(bebida);
 			linea = br.readLine(); // Leer la siguiente línea

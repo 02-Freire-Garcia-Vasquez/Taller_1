@@ -36,6 +36,7 @@ public class Combo implements Producto
 		
 		itemsCombo.add(itemCombo);
 		precio += (int)(itemCombo.getPrecio()*((100-descuento)/100));
+		calorias += (int)(itemCombo.getCalorias());
 
 	}
 	
@@ -51,7 +52,7 @@ public class Combo implements Producto
 	
 	public String generarTextoFactura()
 	{
-		String Factura = nombreCombo + " " +String.valueOf(precio);
+		String Factura = nombreCombo + " $ " +String.valueOf(precio) + " cal: " +String.valueOf(calorias);
 		return Factura;
 	}
 	

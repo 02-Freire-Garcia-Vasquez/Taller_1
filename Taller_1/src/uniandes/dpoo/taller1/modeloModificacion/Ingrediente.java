@@ -14,11 +14,11 @@ public class Ingrediente
 	
 	private int calorias;
 	
-	public Ingrediente(String pnombre, int pCostoAdicional)
+	public Ingrediente(String pnombre, int pCostoAdicional, int pCalorias)
 	{
 		this.nombre = pnombre;
 		this.CostoAdicional = pCostoAdicional;
-		calorias = 5;
+		calorias = pCalorias;
 		
 	// ************************************************************************
 	// Metodos
